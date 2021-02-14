@@ -11,11 +11,12 @@ function Navbar() {
   return (
     <AppBar className="header">
       <Toolbar>
-        <Typography variant="h6" className="flex-spacer">
-          大明购物车
-        </Typography>
+        <Typography variant="h6">大明购物车</Typography>
+        <div className="flex-spacer"></div>
         <Link to="/login">
-          <Button variant="contained" color="primary" disableElevation>登录</Button>
+          <Button variant="contained" color="primary" disableElevation>
+            登录
+          </Button>
         </Link>
       </Toolbar>
     </AppBar>
