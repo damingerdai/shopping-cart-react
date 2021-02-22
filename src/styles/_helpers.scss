@@ -1,0 +1,32 @@
+// ------------------------------
+@import 'helpers/variables';
+// ------------------------------
+@import 'helpers/size';
+@import 'helpers/text';
+
+// Generate Helpers
+@each $key, $utility in $utilities {
+    $values: map-get($utility, values);
+  
+    $properties: map-get($utility, property);
+    $property-class-prefix: map-get($utility, class);
+    $property-class-prefix-hyphen: if(
+      $property-class-prefix== '',
+      $property-class-prefix,
+      $property-class-prefix + '-'
+    );
+  
+    @if type-of($properties) == 'string' {
+      $properties: append((), $properties);
+    }
+  
+    @each $class-modifier, $value in $values {
+  
+      .#{$property-class-prefix-hyphen + $class-modifier} {
+        @each $property in $properties {
+          #{$property}: $value !important;
+        }
+      }
+    }
+  }
+  

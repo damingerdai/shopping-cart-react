@@ -1,0 +1,9 @@
+$text: (
+    'align': (
+        property: text-align,
+        class: text,
+        values: $text
+    )
+);
+
+$utilities: map-merge($text, $utilities);
