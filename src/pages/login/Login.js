@@ -1,18 +1,35 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
+import axios from "axios";
 
 import "./Login.scss";
 
-class Login extends React.Component {
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+  };
+}
 
+function mapDispatchToProps(dispatch, ) {
+  return {
+    login: (username) => dispatch({
+      type: 'LOGIN',
+      username
+    }),
+  };
+}
+
+class Login extends React.Component {
   constructor() {
     super();
     this.state = {
       user: {
-        username: '',
-        password: ''
-      }
+        username: "",
+        password: "",
+      },
     };
 
     this.isLoginButtonDisable = this.isLoginButtonDisable.bind(this);
@@ -23,7 +40,7 @@ class Login extends React.Component {
     const { user } = this.state;
     user.username = $event.target.value;
     this.setState({
-      user
+      user,
     });
   }
 
@@ -31,7 +48,7 @@ class Login extends React.Component {
     const { user } = this.state;
     user.password = $event.target.value;
     this.setState({
-      user
+      user,
     });
   }
 
@@ -42,7 +59,15 @@ class Login extends React.Component {
 
   login() {
     const { user } = this.state;
-    console.log(user);
+    axios
+      .post("login", user)
+      .then((res) => {
+        if (res.status === 200 && res.data.status === 200) {
+          this.props.login(user.username);
+          this.props.history.push('/')
+        }
+      })
+      .catch((err) => console.error(err));
   }
 
   render() {
@@ -69,8 +94,13 @@ class Login extends React.Component {
                 className="w-full input"
               />
               <div className="input text-center">
-                <Button variant="contained" color="primary" disabled={this.isLoginButtonDisable()} onClick={this.login}>
-                   登录
+                <Button
+                  variant="contained"
+                  color="primary"
+                  disabled={this.isLoginButtonDisable()}
+                  onClick={this.login}
+                >
+                  登录
                 </Button>
               </div>
             </form>
@@ -81,4 +111,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
