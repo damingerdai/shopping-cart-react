@@ -11,7 +11,7 @@ import "./Navbar.scss";
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: state.login
   }
 }
 
