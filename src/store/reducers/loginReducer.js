@@ -14,9 +14,14 @@ export function loginReducer(state = initialState, action = {}) {
         ...state,
         username: null,
       };
+    case "LOGIN_SUCCESS":
+      return {
+        ...state,
+        username: action.user.username,
+      }
     default:
       return {
-        state,
+        ...state,
       };
   }
 }

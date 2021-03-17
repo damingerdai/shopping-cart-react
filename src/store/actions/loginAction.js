@@ -5,6 +5,11 @@ export const login = (user) => ({
     user
 })
 
+export const loginSuccess = (user) => ({
+    type: types.LOGIN_SUCCESS, 
+    user,
+})
+
 export const logout = (user) => ({
     type: types.LOGOUT,
     user
