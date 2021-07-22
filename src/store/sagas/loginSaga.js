@@ -15,6 +15,6 @@ function* callLogin(action) {
   if (res.status === 200 && res.data.status === 200) {
     const { username } = action.user;
     yield put(actions.loginSuccess({ username }));
-    yield put(push("/"));
+    yield put(push('/home'));
   }
 }

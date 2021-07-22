@@ -1,8 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { createStore, applyMiddleware } from "redux";
+import { createStore, compose, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-import createSagaMiddleware from 'redux-saga'
+import { createBrowserHistory } from 'history';
+import { routerMiddleware, ConnectedRouter } from 'connected-react-router';
+import createSagaMiddleware from 'redux-saga';
 
 import createRootReducer from './store/reducers';
 import { rootSaga } from './store/sagas';
@@ -12,9 +14,10 @@ import Navbar from "./components/navbar/Navbar";
 
 import "./App.scss";
 
-const rootReducer = createRootReducer();
+const history = createBrowserHistory();
+const rootReducer = createRootReducer(history);
 const sagaMiddleware = createSagaMiddleware();
-const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+const store = createStore(rootReducer,compose(applyMiddleware(routerMiddleware(history), sagaMiddleware)));
 sagaMiddleware.run(rootSaga);
 
 class App extends React.Component {
@@ -25,12 +28,10 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <Router>
-          <React.Fragment>
-            <Navbar />
-            <Content />
-          </React.Fragment>
-        </Router>
+        <ConnectedRouter history={history}>
+              <Navbar />
+              <Content />
+        </ConnectedRouter>
       </Provider>
     );
   }

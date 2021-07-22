@@ -3,7 +3,6 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import axios from "axios";
 
 import { login } from '../../store/actions/loginAction';
 
@@ -12,15 +11,6 @@ import "./Login.scss";
 function mapStateToProps(state) {
   return {
     user: state.user,
-  };
-}
-
-function mapDispatchToProps2(dispatch) {
-  return {
-    login: (username) => dispatch({
-      type: 'LOGIN',
-      username
-    }),
   };
 }
 
@@ -66,15 +56,6 @@ class Login extends React.Component {
   login() {
     const { user } = this.state;
     this.props.login(user);
-    // axios
-    //   .post("login", user)
-    //   .then((res) => {
-    //     if (res.status === 200 && res.data.status === 200) {
-    //       this.props.login(user.username);
-    //       this.props.history.push('/')
-    //     }
-    //   })
-    //   .catch((err) => console.error(err));
   }
 
   render() {
