@@ -21,6 +21,7 @@
     "web-vitals": "^1.0.1"
   },
   "devDependencies": {
+    "prettier": "^2.3.2",
     "sass": "^1.32.7"
   },
   "proxy": "http://localhost:4000",

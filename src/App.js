@@ -29,8 +29,8 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-              <Navbar />
-              <Content />
+          <Navbar />
+          <Content />
         </ConnectedRouter>
       </Provider>
     );
