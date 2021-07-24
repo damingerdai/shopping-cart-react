@@ -1,6 +1,7 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
+import Alert from '@material-ui/lab/Alert';
 import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 
@@ -9,8 +10,10 @@ import { login } from '../../store/actions/loginAction';
 import "./Login.scss";
 
 function mapStateToProps(state) {
+  console.log(state);
   return {
-    user: state.user,
+    username: state.login.username,
+    errMsg: state.login.errMsg
   };
 }
 
@@ -81,6 +84,7 @@ class Login extends React.Component {
                 onChange={($event) => this.handlePassword($event)}
                 className="w-full input"
               />
+              {this.props.errMsg && <Alert severity="error">{this.props.errMsg}</Alert>}
               <div className="input text-center">
                 <Button
                   variant="contained"

@@ -16,5 +16,7 @@ function* callLogin(action) {
     const { username } = action.user;
     yield put(actions.loginSuccess({ username }));
     yield put(push('/home'));
+  } else {
+    yield put(actions.loginFaiure(res.error || res.data.error));
   }
 }
