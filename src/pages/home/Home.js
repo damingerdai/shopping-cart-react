@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,25 +13,21 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+import { getAllGoods } from '../../store/actions/goodAction';
+
 const useStyles = makeStyles({
     tableContainer: {
-      minWidth: 650,
-      marginTop: '150px'
+        minWidth: 650,
+        marginTop: '150px'
     },
-  });
+});
 
-function Home() {
 
-    const createDate = (name, price, num) => {
-        return { name, price, num, total: price * num };
-    }
+function Home(props) {
 
-    const rows = [
-        createDate('电视机', 2000, 2),
-        createDate('手机', 1500, 3),
-        createDate('洗衣机', 300, 2),
-        createDate('电脑', 7000, 4)
-    ];
+    useEffect(() => {
+        props.getAllGoods();
+    }, [])
 
     const classes = useStyles();
 
@@ -51,14 +48,14 @@ function Home() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows.map((row, index) => {
+                                {props.goods.map((row, index) => {
                                     return (<TableRow key={index}>
                                         <TableCell component="th" scope="row">
                                             {row.name}
                                         </TableCell>
-                                        <TableCell >{row.price}</TableCell>
-                                        <TableCell  >{row.num}</TableCell>
-                                        <TableCell  >{row.total}</TableCell>
+                                        <TableCell >￥{row.price}</TableCell>
+                                        <TableCell >{row.num}</TableCell>
+                                        <TableCell >￥{row.total}</TableCell>
                                     </TableRow>
                                     )
                                 })}
@@ -71,4 +68,14 @@ function Home() {
     );
 }
 
-export default withRouter(Home);
+function mapStateToProps(state) {
+    return {
+        goods: state.good ? state.good.data : [],
+    };
+};
+
+const mapDispatchToProps = {
+    getAllGoods
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));
