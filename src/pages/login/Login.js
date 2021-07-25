@@ -10,7 +10,6 @@ import { login } from '../../store/actions/loginAction';
 import "./Login.scss";
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     username: state.login.username,
     errMsg: state.login.errMsg
