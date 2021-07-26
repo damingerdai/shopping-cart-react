@@ -15,14 +15,15 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-import { getAllGoods } from '../../store/actions/goodAction';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
+import { AddGoodDialog } from './Dialog';
+
+import { addGood, getAllGoods } from '../../store/actions/goodAction';
 
 const useStyles = makeStyles({
     tableContainer: {
         minWidth: 650,
         marginTop: '150px'
-    },
+    }
 });
 
 
@@ -44,28 +45,18 @@ function Home(props) {
                 <Typography component="div">
                     <Box component="div" m={1} className={classes.tableContainer}>
                         <Button variant="contained" color="primary" onClick={() => setOpen(true)}>添加</Button>
-                        <Dialog
-                            open={open}
-                            onClose={() => setOpen(false)}
-                            aria-labelledby="alert-dialog-title"
-                            aria-describedby="alert-dialog-description"
-                            >
-                            <DialogTitle id="alert-dialog-title">添加新的商品</DialogTitle>
-                            <DialogContent>
-                                <DialogContentText id="alert-dialog-description">
-                                    hello world
-                                </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={() => setOpen(false)} color="primary">取消</Button>
-                                <Button onClick={() => setOpen(false)} color="primary" autoFocus>确定</Button>
-                            </DialogActions>
-                        </Dialog>
+                        <AddGoodDialog 
+                            open={open} 
+                            onClose={() => setOpen(false)} 
+                            valueChange={(state) => {
+                                 props.addGood(state)
+                        }}/>
                     </Box>
                     <TableContainer component={Paper} >
                         <Table aria-label="table" >
                             <TableHead>
                                 <TableRow>
+                                    <TableCell>ID</TableCell>
                                     <TableCell>商品</TableCell>
                                     <TableCell>价格</TableCell>
                                     <TableCell>数量</TableCell>
@@ -73,8 +64,9 @@ function Home(props) {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {props.goods.map((row, index) => {
-                                    return (<TableRow key={index}>
+                                {props.goods.map((row) => {
+                                    return (<TableRow key={row.id}>
+                                        <TableCell>{row.id}</TableCell>
                                         <TableCell component="th" scope="row">
                                             {row.name}
                                         </TableCell>
@@ -100,7 +92,8 @@ function mapStateToProps(state) {
 };
 
 const mapDispatchToProps = {
-    getAllGoods
+    getAllGoods,
+    addGood
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));

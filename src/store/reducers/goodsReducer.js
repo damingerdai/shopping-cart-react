@@ -23,6 +23,22 @@ export function goodsRedcuer(state = initialState, action = {}) {
                 data: [],
                 errMsg: action.errMsg,
             };
+        case types.ADD_GOOD:
+            return {
+                ...state,
+            };
+        case types.ADD_GOOD_SUCCESS:
+            return {
+                ...state,
+                data: action.goods,
+                errMsg: '',
+            };
+        case types.ADD_GOOD_FAIURE:
+            return {
+                ...state,
+                data: [],
+                errMsg: action.errMsg,
+            };
         default: 
             return {
                 ...state

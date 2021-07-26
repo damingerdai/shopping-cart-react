@@ -44,7 +44,7 @@ app.get('/goods', (req, res) => {
 });
 
 app.put('/goods', (req, res) => {
-  const newData = createDate(data.length, req.body.name, req.body.price, req.body.num);
+  const newData = createDate(data.length + 1, req.body.name, req.body.price, req.body.num);
   data.push(newData);
   res.json({
     status: 200,
@@ -54,4 +54,4 @@ app.put('/goods', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
-})
+});

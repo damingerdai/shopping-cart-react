@@ -6,6 +6,7 @@ import * as actions from '../actions/goodAction';
 
 export default function* callGoodsApo() {
     yield takeEvery(types.GET_ALL_GOODS, callGetAllGoods);
+    yield takeEvery(types.ADD_GOOD, callAddGood);
 }
 
 function* callGetAllGoods(action) {
@@ -15,5 +16,15 @@ function* callGetAllGoods(action) {
         yield put(actions.getAllGoodsSuccess(res.data.data));
     } else {
         yield put(actions.getAllGoodsFaiure(res.error || res.data.error));
+    }
+}
+
+function* callAddGood(action) {
+    const res = yield call(goodsApi.addGoods, action.good);
+
+    if (res.status === 200 && res.data.status === 200) {
+        yield put(actions.addGoodSuccess(res.data.data));
+    } else {
+        yield put(actions.addGoodFaiure(res.error || res.data.error));
     }
 }
