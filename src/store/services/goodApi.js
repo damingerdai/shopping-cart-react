@@ -12,3 +12,8 @@ export const addGoods = (good) => {
     const url = `goods`;
     return axios.put(url, good);
 };
+
+export const deleteGood = (id) => {
+    const url = `goods/${id}`;
+    return axios.delete(url);
+};

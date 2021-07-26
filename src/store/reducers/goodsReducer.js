@@ -39,9 +39,13 @@ export function goodsRedcuer(state = initialState, action = {}) {
                 data: [],
                 errMsg: action.errMsg,
             };
+        case types.DELETE_GOOD:
+            return {
+                ...state,
+            };
         default: 
             return {
                 ...state
-            }
+            };
     }
 }

@@ -29,7 +29,7 @@ const createDate = (id, name, price, num) => {
   return {id, name, price, num, total: price * num };
 }
 
-const data = [
+let data = [
   createDate(1, '电视机', 2000, 2),
   createDate(2, '手机', 1500, 3),
   createDate(3, '洗衣机', 300, 2),
@@ -49,6 +49,14 @@ app.put('/goods', (req, res) => {
   res.json({
     status: 200,
     data: data
+  });
+});
+
+app.delete('/goods/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  data = data.filter(d => d.id !== id);
+  res.json({
+    status: 200
   });
 });
 

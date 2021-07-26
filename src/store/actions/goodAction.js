@@ -27,4 +27,18 @@ export const addGoodSuccess = (goods) => ({
 export const addGoodFaiure = (error) => ({
     type: types.ADD_GOOD_FAIURE,
     error
-})
+});
+
+export const deleteGood = (id) => ({
+    type: types.DELETE_GOOD,
+    id
+});
+
+export const deleteGoodSuccess = () => ({
+    type: types.DELETE_GOOD_SUCCESS,
+});
+
+export const deleteGoodFaiure = () => ({
+    type: types.DELETE_GOOD_FAIURE,
+});
+
