@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
@@ -14,6 +16,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 import { getAllGoods } from '../../store/actions/goodAction';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
 
 const useStyles = makeStyles({
     tableContainer: {
@@ -25,9 +28,11 @@ const useStyles = makeStyles({
 
 function Home(props) {
 
+    const [open, setOpen] = useState(false);
+
     useEffect(() => {
         props.getAllGoods();
-    }, [])
+    }, []);
 
     const classes = useStyles();
 
@@ -37,7 +42,27 @@ function Home(props) {
             <CssBaseline />
             <Container maxWidth="sm">
                 <Typography component="div">
-                    <TableContainer component={Paper} className={classes.tableContainer}>
+                    <Box component="div" m={1} className={classes.tableContainer}>
+                        <Button variant="contained" color="primary" onClick={() => setOpen(true)}>添加</Button>
+                        <Dialog
+                            open={open}
+                            onClose={() => setOpen(false)}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                            >
+                            <DialogTitle id="alert-dialog-title">添加新的商品</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    hello world
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => setOpen(false)} color="primary">取消</Button>
+                                <Button onClick={() => setOpen(false)} color="primary" autoFocus>确定</Button>
+                            </DialogActions>
+                        </Dialog>
+                    </Box>
+                    <TableContainer component={Paper} >
                         <Table aria-label="table" >
                             <TableHead>
                                 <TableRow>

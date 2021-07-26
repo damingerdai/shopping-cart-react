@@ -25,23 +25,32 @@ app.post('/login', (req, res) => {
 
 })
 
+const createDate = (id, name, price, num) => {
+  return {id, name, price, num, total: price * num };
+}
+
+const data = [
+  createDate(1, '电视机', 2000, 2),
+  createDate(2, '手机', 1500, 3),
+  createDate(3, '洗衣机', 300, 2),
+  createDate(4, '电脑', 7000, 4)
+];
+
 app.get('/goods', (req, res) => {
-  const createDate = (id, name, price, num) => {
-    return {id, name, price, num, total: price * num };
-  }
-
-  const rows = [
-    createDate(1, '电视机', 2000, 2),
-    createDate(2, '手机', 1500, 3),
-    createDate(3, '洗衣机', 300, 2),
-    createDate(4, '电脑', 7000, 4)
-  ];
-
   res.json({
     status: 200,
-    data: rows
+    data: data
   })
-})
+});
+
+app.put('/goods', (req, res) => {
+  const newData = createDate(data.length, req.body.name, req.body.price, req.body.num);
+  data.push(newData);
+  res.json({
+    status: 200,
+    data: data
+  });
+});
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
