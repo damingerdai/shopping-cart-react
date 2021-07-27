@@ -17,3 +17,9 @@ export const deleteGood = (id) => {
     const url = `goods/${id}`;
     return axios.delete(url);
 };
+
+export const updateGoods = (good) => {
+    good.total = good.price * good.num;
+    const url = `goods/${good.id}`;
+    return axios.post(url, good);
+};

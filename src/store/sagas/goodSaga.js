@@ -8,6 +8,7 @@ export default function* callGoodsApi() {
     yield takeEvery(types.GET_ALL_GOODS, callGetAllGoods);
     yield takeEvery(types.ADD_GOOD, callAddGood);
     yield takeEvery(types.DELETE_GOOD, callDeleteGood);
+    yield takeEvery(types.UPDATE_GOOD, callUpdateGood);
 }
 
 function* callGetAllGoods(action) {
@@ -30,12 +31,21 @@ function* callAddGood(action) {
     }
 }
 
+function* callUpdateGood(action) {
+    console.log(action)
+    const res = yield call(goodsApi.updateGoods, action.good);
+
+    if (res.status === 200 && res.data.status === 200) {
+        yield put(actions.getAllGoods());
+    }
+}
+
 function* callDeleteGood(action) {
     const res = yield call(goodsApi.deleteGood, action.id);
 
     if (res.status === 200 && res.data.status === 200) {
         yield put(actions.getAllGoods());
     } else {
-        yield put(actions.addGoodFaiure(res.error || res.data.error));
+        yield put(actions.deleteGoodFaiure(res.error || res.data.error));
     }
 }

@@ -42,3 +42,7 @@ export const deleteGoodFaiure = () => ({
     type: types.DELETE_GOOD_FAIURE,
 });
 
+export const updateGood = (good) => ({
+    type: types.UPDATE_GOOD,
+    good
+});

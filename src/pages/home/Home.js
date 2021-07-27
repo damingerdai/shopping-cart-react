@@ -18,9 +18,9 @@ import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import UpdateIcon from '@material-ui/icons/Update';
 
-import { addGood, deleteGood, getAllGoods } from '../../store/actions/goodAction';
+import { addGood, deleteGood, getAllGoods, updateGood } from '../../store/actions/goodAction';
 import ConfirmButton from './Confirm';
-import { AddGoodDialog } from './Dialog';
+import { GoodDialog } from './Dialog';
 
 const useStyles = makeStyles((theme) => ({
     tableContainer: {
@@ -28,16 +28,18 @@ const useStyles = makeStyles((theme) => ({
         marginTop: '150px'
     },
     actions: {
-      '& > *': {
-        margin: theme.spacing(1),
-      },
+        '& > *': {
+            margin: theme.spacing(1),
+        },
     },
-  }))
+}))
 
 
 function Home(props) {
 
-    const [open, setOpen] = useState(false);
+    const [addGoodDialogOpen, setAddGoodDialogOpen] = useState(false);
+    const [updateGoodDialogOpen, setUpdateGoodDialogOpen] = useState(-1);
+
 
     useEffect(() => {
         props.getAllGoods();
@@ -52,10 +54,11 @@ function Home(props) {
             <Container maxWidth="sm">
                 <Typography component="div">
                     <Box component="div" m={1} className={classes.tableContainer}>
-                        <Button variant="contained" color="primary" startIcon={<AddIcon/>} onClick={() => setOpen(true)}>添加</Button>
-                        <AddGoodDialog
-                            open={open}
-                            onClose={() => setOpen(false)}
+                        <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={() => setAddGoodDialogOpen(true)}>添加</Button>
+                        <GoodDialog
+                            open={addGoodDialogOpen}
+                            dialogTitle="添加商品"
+                            onClose={() => setAddGoodDialogOpen(false)}
                             valueChange={(state) => {
                                 props.addGood(state)
                             }} />
@@ -83,7 +86,7 @@ function Home(props) {
                                         <TableCell>{row.num}</TableCell>
                                         <TableCell>￥{row.total}</TableCell>
                                         <TableCell>
-                                            <Button variant="contained" color="primary" startIcon={<UpdateIcon />}>
+                                            <Button variant="contained" color="primary" startIcon={<UpdateIcon />} onClick={() => setUpdateGoodDialogOpen(row.id)}>
                                                 修改
                                             </Button>
                                             <ConfirmButton
@@ -99,8 +102,22 @@ function Home(props) {
                                             >
                                                 删除
                                             </ConfirmButton>
-                                                
+
                                         </TableCell>
+                                        <GoodDialog
+                                            open={updateGoodDialogOpen === row.id}
+                                            dialogTitle="修改商品"
+                                            value={{
+                                                ...row
+                                            }}
+                                            onClose={() => setUpdateGoodDialogOpen(-1)}
+                                            valueChange={(state) => {
+                                                console.log(state);
+                                                props.updateGood({
+                                                    ...state,
+                                                    id: row.id
+                                                })
+                                            }} />
                                     </TableRow>
                                     )
                                 })}
@@ -122,7 +139,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
     getAllGoods,
     addGood,
-    deleteGood
+    deleteGood,
+    updateGood,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));

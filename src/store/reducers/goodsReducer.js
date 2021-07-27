@@ -43,6 +43,10 @@ export function goodsRedcuer(state = initialState, action = {}) {
             return {
                 ...state,
             };
+        case types.UPDATE_GOOD:
+            return {
+                ...state,
+            };
         default: 
             return {
                 ...state

@@ -15,9 +15,9 @@ const useStyles = makeStyles({
 
 });
 
-export const AddGoodDialog = (props) => {
+export const GoodDialog = (props) => {
     const classes = useStyles();
-    const [state, setState] = useState({ name: '', price: 1, num: 1 });
+    const [state, setState] = useState(props.value || { name: '', price: 1, num: 1 });
 
     const closeDialog = () => {
         if (props.onClose) {
@@ -39,7 +39,7 @@ export const AddGoodDialog = (props) => {
             onClose={closeDialog}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description">
-            <DialogTitle id="alert-dialog-title">添加新的商品</DialogTitle>
+            <DialogTitle id="alert-dialog-title">{props.dialogTitle}</DialogTitle>
             <DialogContent>
                 <form className={classes.form}>
                     <TextField 

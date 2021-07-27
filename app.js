@@ -52,6 +52,21 @@ app.put('/goods', (req, res) => {
   });
 });
 
+app.post('/goods/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const body = req.body;
+  const i = data.findIndex(d => d.id === id);
+  if (i > -1) {
+    data[i] = {
+      ...data[i],
+      ...body
+    };
+  }
+  res.json({
+    status: 200
+  });
+});
+
 app.delete('/goods/:id', (req, res) => {
   const id = parseInt(req.params.id, 10);
   data = data.filter(d => d.id !== id);
